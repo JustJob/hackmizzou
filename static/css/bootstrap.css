@@ -4419,7 +4419,7 @@ input[type="submit"].btn.btn-mini {
   font-size: 20px;
   font-weight: 200;
   color: #ffffff;
-  text-shadow: 0 1px 0 #ffffff;
+  text-shadow: 0 1px 0 #000000;
 }
 
 .navbar .brand:hover,
@@ -4430,16 +4430,16 @@ input[type="submit"].btn.btn-mini {
 .navbar-text {
   margin-bottom: 0;
   line-height: 40px;
-  color: #777777;
+  color: #ffffff;
 }
 
 .navbar-link {
-  color: #777777;
+  color: #ffffff;
 }
 
 .navbar-link:hover,
 .navbar-link:focus {
-  color: #333333;
+  color: #ffffff;
 }
 
 .navbar .divider-vertical {
@@ -4613,9 +4613,9 @@ input[type="submit"].btn.btn-mini {
 .navbar .nav > li > a {
   float: none;
   padding: 10px 15px 10px;
-  color: #777777;
+  color: #ffffff;
   text-decoration: none;
-  text-shadow: 0 1px 0 #ffffff;
+  text-shadow: 0 1px 0 #000000;
 }
 
 .navbar .nav .dropdown-toggle .caret {
@@ -4672,8 +4672,8 @@ input[type="submit"].btn.btn-mini {
 .navbar .btn-navbar.disabled,
 .navbar .btn-navbar[disabled] {
   color: #ffffff;
-  background-color: #e5e5e5;
-  *background-color: #d9d9d9;
+  background-color: #ffffff;
+  *background-color: #000000;
 }
 
 .navbar .btn-navbar:active,
@@ -5254,6 +5254,19 @@ input[type="submit"].btn.btn-mini {
 
 .modal-form {
   margin-bottom: 0;
+}
+
+#wrapper{
+  position:relative;
+  height:auto;
+  min-height:100%;
+}
+
+#DIV_81{
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:100%;
 }
 
 .modal-footer {

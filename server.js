@@ -17,9 +17,6 @@ function handleReq(request, response) {
   var pathname = url.parse(request.url).pathname;
   if(paths[pathname]) {
     paths[pathname](request, response);
-  } else {
-    response.writeHead(200, {"Content-Type": "text/html"});
-    response.end(index);
   }
 }
 

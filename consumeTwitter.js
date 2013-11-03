@@ -2,6 +2,7 @@ var twitter = require('ntwitter');
 var https = require('https');
 var mongoHandle = require('./mongoHandle');
 var privates = require('./privates');
+var alchemyapi = require('alchemyapi_node')
 
 
 var twit = new twitter({
@@ -15,13 +16,36 @@ twit.verifyCredentials(function (err, data) {
   console.log("success");
 });
 
-twit.stream('statuses/filter', {language:'en', locations:'-180,-90,180,90'}, function(response) {
+twit.stream('statuses/sample', {language:'en'}, function(response) {
   var body ='';
+  var text = '';
   response.on("data",function(chunk) {
-    var words = chunk.text.split(' ')
-    for (var i = words.length - 1; i >= 0; i--) {
-      mongoHandle.incWord(words[i]);
-    };
+    if(text.length > 5000) {
+      alchemyapi.keywords('text', text, {}, function(error, alchResp) {
+        if(error) {
+          console.log("error in alchemyapi:" + error);
+        } else {
+          if(alchResp['keywords']) {
+            var keywords = alchResp['keywords'];
+            for (var i = keywords.length - 1; i >= 0; i--) {
+              if(keywords[i].text.length > 2) {
+                var word = keywords[i].text.toLowerCase();
+                mongoHandle.incWord(word);
+              }
+            };
+          } 
+          if(alchResp['entities']) {
+            for (var i = alchResp['entities'].length - 1; i >= 0; i--) {
+              var word = alchResp['entities'][i].text.toLowerCase();
+              mongoHandle.incWord(word);
+            };
+          }
+        }
+      });
+      text = '';
+    } else {
+      text = text + '\n' + chunk.text;
+    }
   });
 
   response.on("error", function(err) {

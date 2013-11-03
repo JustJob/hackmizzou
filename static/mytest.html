@@ -5,11 +5,11 @@
 <script src="./js/d3.js"></script>
 <script src="./js/d3.layout.cloud.js"></script>
 <script>
-  $.get('http://localhost:80/getCloud', function(words) {
+  $.get('http://localhost/getCloud', function(data) {
     var fill = d3.scale.category20();
 
     d3.layout.cloud().size([1000, 1000])
-        .words(words)
+        .words(JSON.parse(data))
         .padding(5)
         .rotate(function() { return (Math.random() * 90); })
         .font("Impact")

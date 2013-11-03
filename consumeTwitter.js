@@ -15,12 +15,19 @@ twit.verifyCredentials(function (err, data) {
   console.log("success");
 });
 
-twit.stream('statuses/filter', {locations: '-122.75,36.8,-121.75,37.8', language:'en'}, function(response) {
+twit.stream('statuses/filter', {language:'en', locations:'-180,-90,180,90'}, function(response) {
   var body ='';
   response.on("data",function(chunk) {
-   //var tweet = JSON.parse(chunk);
-    console.log("tweet" + chunk.text);
+    var words = chunk.text.split(' ')
+    for (var i = words.length - 1; i >= 0; i--) {
+      mongoHandle.incWord(words[i]);
+    };
   });
+
+  response.on("error", function(err) {
+    console.log('there was an error %j:', err);
+    console.log('response %j', response);
+  })
 
   response.on("end",function(){
     console.log('Disconnected');

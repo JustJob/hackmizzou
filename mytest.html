@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <meta charset="utf-8">
 <body>
@@ -5,18 +6,13 @@
 <script src="../d3.layout.cloud.js"></script>
 <script>
   var fill = d3.scale.category20();
-  d3.select("body").transition()
-      .style("background-color", "black");
-      
-  d3.layout.cloud().size([1600, 1600])
-      .words([{text:'wow', size:100},
-               {text:'wow1', size:100},
-               {text:'wow2', size:100},
-               {text:'wow3', size:100},
-               {text:'wow4', size:100},
-               {text:'wow5', size:100},
-               {text:'wow6', size:100},
-               {text:'wow7', size:100}])
+
+  d3.layout.cloud().size([300, 300])
+      .words([
+        "Hello", "world", "normally", "you", "want", "more", "words",
+        "than", "this"].map(function(d) {
+        return {text: d, size: 10 + Math.random() * 90};
+      }))
       .padding(5)
       .rotate(function() { return ~~(Math.random() * 2) * 90; })
       .font("Impact")
@@ -26,8 +22,8 @@
 
   function draw(words) {
     d3.select("body").append("svg")
-        .attr("width", 1600)
-        .attr("height", 1600)
+        .attr("width", 300)
+        .attr("height", 300)
       .append("g")
         .attr("transform", "translate(150,150)")
       .selectAll("text")

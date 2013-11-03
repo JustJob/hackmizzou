@@ -18,6 +18,7 @@ function handleReq(request, response) {
   if(paths[pathname]) {
     paths[pathname](request, response);
   }
+  next(request, response);
 }
 
 function getCloud(req, res) {

@@ -1,4 +1,4 @@
-/*!
+/*! 
  * Bootstrap v2.3.2
  *
  * Copyright 2013 Twitter, Inc
@@ -761,6 +761,12 @@ h1,
 h2,
 h3 {
   line-height: 40px;
+}
+
+#body {
+   padding:10px;
+   padding-bottom:60px;
+   
 }
 
 h1 {
@@ -5256,18 +5262,15 @@ input[type="submit"].btn.btn-mini {
   margin-bottom: 0;
 }
 
-#wrapper{
-  position:relative;
-  height:auto;
-  min-height:100%;
-}
+#wrap {min-height: 100%;}
 
-#DIV_81{
-  position:absolute;
-  bottom:0;
-  left:0;
-  width:100%;
-}
+#main {overflow:auto;
+	padding-bottom: 180px;}  /* must be same height as the footer */
+
+#footer {position: relative;
+	margin-top: -180px; /* negative value of footer height */
+	height: 180px;
+	clear:both;} 
 
 .modal-footer {
   padding: 14px 15px 15px;

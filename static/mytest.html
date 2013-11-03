@@ -5,7 +5,7 @@
 <script src="./js/d3.js"></script>
 <script src="./js/d3.layout.cloud.js"></script>
 <script>
-  $.get('http://localhost/getCloud', function(data) {
+  $.get('http://localhost/getCloud?location=all', function(data) {
     var fill = d3.scale.category20();
 
     d3.layout.cloud().size([1000, 1000])

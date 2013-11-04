@@ -4,6 +4,16 @@ var mongoHandle = require('./mongoHandle');
 var privates = require('./privates');
 var alchemyapi = require('alchemyapi_node')
 
+var city = 'nyc'
+var twitterStr = 'statuses/sample';
+var twitParams = {language:'en'};
+
+if(city == 'nyc') {
+  twitterStr = 'statuses/filter';
+  twitParams = {language:'en',
+              locations:'-74,40,-73,41'}
+}
+
 
 var twit = new twitter({
   consumer_key: privates.consumer_key,
@@ -16,10 +26,11 @@ twit.verifyCredentials(function (err, data) {
   console.log("success");
 });
 
-twit.stream('statuses/sample', {language:'en'}, function(response) {
+twit.stream(twitterStr, twitParams, function(response) {
   var body ='';
   var text = '';
   response.on("data",function(chunk) {
+    console.log('textlength:' + text.length);
     if(text.length > 5000) {
       alchemyapi.keywords('text', text, {}, function(error, alchResp) {
         if(error) {
@@ -30,14 +41,14 @@ twit.stream('statuses/sample', {language:'en'}, function(response) {
             for (var i = keywords.length - 1; i >= 0; i--) {
               if(keywords[i].text.length > 2) {
                 var word = keywords[i].text.toLowerCase();
-                mongoHandle.incWord(word);
+                mongoHandle.incWord(word, 'words', city);
               }
             };
           } 
           if(alchResp['entities']) {
             for (var i = alchResp['entities'].length - 1; i >= 0; i--) {
               var word = alchResp['entities'][i].text.toLowerCase();
-              mongoHandle.incWord(word);
+              mongoHandle.incWord(word, 'words', city);
             };
           }
         }

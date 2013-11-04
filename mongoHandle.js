@@ -4,17 +4,29 @@ exports.close = close;
 exports.getData = getData;
 
 var databaseUrl = "test"; // "username:password@example.com/mydb"
-var collections = ["words"];
+var collections = ["words", "testwords", "stlwords", "nycwords"];
 var db = require("mongojs").connect(databaseUrl, collections);
 
 var HOW_MANY_WORDS = 100;
 
-function incWord(pWord) {
-  db.words.update({word:pWord}, {$inc: {freq : 1 }}, function(err, updated) {
+function incWord(pWord, collection, city) {
+  var col = null;
+  if(collection == "words") {
+    col = db.words;
+  } else if(collection == "testwords") {
+    col = db.testwords;
+  }
+  if(city == 'stl') {
+    col = db.stlwords;
+  } else if (city == 'nyc') {
+    col = db.nycwords;
+  }
+
+  col.update({word:pWord}, {$inc: {freq : 1 }}, function(err, updated) {
     if(err) {
       console.log("error when updating " + pWord);
     } else if( !updated ) {
-      db.words.insert({word:pWord, freq:1}, function(err, word) {
+      col.insert({word:pWord, freq:1}, function(err, word) {
         if(err) {
           console.log("error on addition for " + pWord);
         } else {
@@ -27,7 +39,7 @@ function incWord(pWord) {
   });
 }
 
-function getData(callback) {
+function getData(city, callback) {
   db.words.find().sort({freq:-1}, function(err, words) {
     console.log("sorted the data");
     console.log("words length " + words.length)

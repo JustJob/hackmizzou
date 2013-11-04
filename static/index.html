@@ -15,21 +15,32 @@
 			<div class="nav-collapse collapse" id="DIV_17">
 				<ul class="nav pull-right" id="UL_18">
 					<li id="LI_21">
-						<a href="#" id="A_22">About Us</a>
+						<a href="about.html" id="A_22">About Us</a>
 					</li>
-				</ul>
+        </ul>
+        <div class="col-sm-3 col-md-3 pull-right">
+        <form class="navbar-form" role="search">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Enter Location" name="srch-term" id="srch-term">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="submit">submit<i class="glyphicon glyphicon-search"></i></button>
+            </span>
+        </div>
+        </form>
+        </div>
 			</div>
 		</div>
 	</div>
 </div>
 <script>
-  $.get('http://localhost/getCloud', function(data) {
+ <script>
+  $.get('getCloud?location=all', function(data) {
     var fill = d3.scale.category20();
 
-    d3.layout.cloud().size([1000, 1000])
+    d3.layout.cloud().size([1000, 500])
         .words(JSON.parse(data))
         .padding(5)
-        .rotate(function() { return (Math.random() * 90); })
+        .rotate(function() { return (Math.random() * 60) -30; })
         .font("Impact")
         .fontSize(function(d) { return d.size; })
         .on("end", draw)
@@ -38,9 +49,9 @@
     function draw(words) {
       d3.select("body").append("svg")
           .attr("width", 1000)
-          .attr("height", 1000)
+          .attr("height", 500)
         .append("g")
-          .attr("transform", "translate(500,500)")
+          .attr("transform", "translate(500,250)")
         .selectAll("text")
           .data(words)
         .enter().append("text")
@@ -56,20 +67,7 @@
   });
 </script>
 
-<div class="container" id="DIV_81">
-	<div class="row-fluid" id="DIV_82">
-		<div class="span4" id="DIV_83">
-			<p id="P_84">
-				
-			</p>
-		</div>
-		<div class="span4 text-center" id="DIV_86">
-			© 2013 <a href="#" id="A_85">Justin O'Brien, Alek Smiles, Mark Bradshaw</a>
-		</div>
-	</div>
-</div>
 
 </head>
 
 </html>
-

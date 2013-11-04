@@ -8,10 +8,10 @@
   $.get('getCloud?location=all', function(data) {
     var fill = d3.scale.category20();
 
-    d3.layout.cloud().size([1000, 1000])
+    d3.layout.cloud().size([1000, 500])
         .words(JSON.parse(data))
         .padding(5)
-        .rotate(function() { return (Math.random() * 90); })
+        .rotate(function() { return (Math.random() * 60) -30; })
         .font("Impact")
         .fontSize(function(d) { return d.size; })
         .on("end", draw)
@@ -20,9 +20,9 @@
     function draw(words) {
       d3.select("body").append("svg")
           .attr("width", 1000)
-          .attr("height", 1000)
+          .attr("height", 500)
         .append("g")
-          .attr("transform", "translate(500,500)")
+          .attr("transform", "translate(500,250)")
         .selectAll("text")
           .data(words)
         .enter().append("text")
